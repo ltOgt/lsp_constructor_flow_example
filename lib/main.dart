@@ -25,7 +25,7 @@ void main(List<String> args) async {
 
   final response = await lsp.textDocument_definition(
     filePath: exampleFile,
-    // points to "MyClass()" in example.dart
+    // points to "MyClass()" in "m = ..." in example.dart
     line: 1,
     character: 14,
   );
@@ -34,4 +34,16 @@ void main(List<String> args) async {
 
   print(start.character);
   print(end.character);
+
+  final response2 = await lsp.textDocument_definition(
+    filePath: exampleFile,
+    // points to "MyClass" in "type = ..." in example.dart
+    line: 2,
+    character: 18,
+  );
+  final start2 = response2.fileLocations.first.range.start;
+  final end2 = response2.fileLocations.first.range.end;
+
+  print(start2.character);
+  print(end2.character);
 }
